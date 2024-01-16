@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe Game</title>
+    <style>
+        td {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 18px;
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Tic-Tac-Toe Game</h2>
+
+<table id="ticTacToe">
+    <tr>
+        <td id="cell1" onclick="makeMove(1)"></td>
+        <td id="cell2" onclick="makeMove(2)"></td>
+        <td id="cell3" onclick="makeMove(3)"></td>
+    </tr>
+    <tr>
+        <td id="cell4" onclick="makeMove(4)"></td>
+        <td id="cell5" onclick="makeMove(5)"></td>
+        <td id="cell6" onclick="makeMove(6)"></td>
+    </tr>
+    <tr>
+        <td id="cell7" onclick="makeMove(7)"></td>
+        <td id="cell8" onclick="makeMove(8)"></td>
+        <td id="cell9" onclick="makeMove(9)"></td>
+    </tr>
+</table>
+
+<script>
+    let currentPlayer = 'X';
+    let moves = 0;
+
+    function makeMove(cellNumber) {
+        let cell = document.getElementById('cell' + cellNumber);
+
+        // Check if the cell is empty and the game is not over
+        if (!cell.innerText && moves < 9) {
+            cell.innerText = currentPlayer;
+            moves++;
+
+            // Check for a win after 5 moves (the earliest a player can win)
+            if (moves >= 5) {
+                if (checkForWin()) {
+                    alert('Player ' + currentPlayer + ' wins!');
+                    resetGame();
+                    return;
+                }
+            }
+
+            // Check for a tie
+            if (moves === 9 && !checkForWin()) {
+                alert('It\'s a tie!');
+                resetGame();
+                return;
+            }
+
+            // Switch to the other player
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        }
+    }
+
+    function checkForWin() {
+        let cells = Array.from(document.getElementsByTagName('td'));
+
+        // Define winning combinations
+        let winningCombinations = [
+            [1, 2, 3], [4, 5, 6], [7, 8, 9], // Rows
+            [1, 4, 7], [2, 5, 8], [3, 6, 9], // Columns
+            [1, 5, 9], [3, 5, 7] // Diagonals
+        ];
+
+        // Check each winning combination
+        for (let combination of winningCombinations) {
+            let [a, b, c] = combination;
+
+            // Check if all three cells in the combination have the same player's symbol
+            if (cells[a - 1].innerText && cells[a - 1].innerText === cells[b - 1].innerText && cells[b - 1].innerText === cells[c - 1].innerText) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    function resetGame() {
+        // Clear all cells
+        Array.from(document.getElementsByTagName('td')).forEach(cell => {
+            cell.innerText = '';
+        });
+
+        // Reset variables
+        currentPlayer = 'X';
+        moves = 0;
+    }
+</script>
+
+</body>
+</html>
