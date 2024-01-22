@@ -1,10 +1,7 @@
 *{
-    background-color: black;
+    background-color: rgb(0,0,0);
 }
 table {
-    /* position: absolute;
-    left: 400px;
-    top: 400px; */
     border-collapse: collapse;
 }
 p{
@@ -46,3 +43,5 @@ h2{
     border-right: black;
     border-top: black;
 }
+
+
